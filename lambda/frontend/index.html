@@ -1,1 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Text to Speech</title></head>
+<body>
+  <h1>Type Text to Hear It</h1>
+  <textarea id="text" rows="4" cols="50"></textarea><br>
+  <button onclick="convertText()">Speak</button>
+  <audio id="player" controls></audio>
 
+  <script>
+    async function convertText() {
+      const text = document.getElementById('text').value;
+      const response = await fetch('YOUR_API_GATEWAY_URL/speak', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      const data = await response.json();
+      document.getElementById('player').src = data.audio_url;
+    }
+  </script>
+</body>
+</html>
